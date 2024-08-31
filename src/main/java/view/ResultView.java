@@ -21,6 +21,6 @@ public class ResultView {
     }
 
     public void printInvalidMove() {
-        System.out.println("유효하지 않은 이동입니다. 다시 시도하세요.");
+        System.out.println("유효하지 않은 이동입니다. 다시 입력하세요.");
     }
 }

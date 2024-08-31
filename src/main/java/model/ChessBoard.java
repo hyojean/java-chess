@@ -1,9 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessBoard {
+public class ChessBoard implements Serializable {
     private final Map<String, Piece> board;
 
     public ChessBoard() {
@@ -11,7 +12,6 @@ public class ChessBoard {
     }
 
     public void initialize() {
-        // 체스판 초기화
         board.clear();
 
         // 백팀 말 배치
@@ -68,5 +68,26 @@ public class ChessBoard {
             }
         }
         return score;
+    }
+
+    public void initializeFromString(String boardState) {
+        // 문자열에서 체스판 상태를 복원하는 로직을 추가
+        board.clear();
+        String[] positions = boardState.split(" ");
+        for (String position : positions) {
+            char symbol = position.charAt(0);
+            String color = Character.isUpperCase(symbol) ? "black" : "white";
+            board.put(position.substring(1), PieceFactory.createPiece(symbol, color));
+        }
+    }
+
+    @Override
+    public String toString() {
+        // 체스판 상태를 문자열로 변환하는 로직을 추가
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, Piece> entry : board.entrySet()) {
+            sb.append(entry.getValue().getSymbol()).append(entry.getKey()).append(" ");
+        }
+        return sb.toString().trim();
     }
 }
