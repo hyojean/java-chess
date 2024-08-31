@@ -1,13 +1,21 @@
 package model;
 
-public class Piece {
+public abstract class Piece {
     private final char symbol;
+    private final String color;
 
-    public Piece(char symbol) {
+    protected Piece(char symbol, String color) {
         this.symbol = symbol;
+        this.color = color;
     }
 
     public char getSymbol() {
         return symbol;
     }
+
+    public String getColor() {
+        return color;
+    }
+
+    public abstract boolean isValidMove(String source, String target, ChessBoard board);
 }
