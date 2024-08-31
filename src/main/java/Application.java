@@ -7,6 +7,8 @@ public class Application {
         ChessGame game = new ChessGame();
         InputView inputView = new InputView();
         ResultView resultView = new ResultView();
+        boolean isGameStarted = false;
+        boolean isWhiteTurn = true; // true면 백돌 차례, false면 흑돌 차례
 
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -19,14 +21,33 @@ public class Application {
             if (command.equals("start")) {
                 game.getBoard().initialize();
                 resultView.printChessBoard(game.getBoard());
+                isGameStarted = true;
             } else if (command.startsWith("move")) {
+                if (!isGameStarted) {
+                    System.out.println("게임을 시작하세요.");
+                    continue;
+                }
+
                 String[] moveCommand = command.split(" ");
                 if (moveCommand.length == 3) {
-                    boolean isValid = game.move(moveCommand[1], moveCommand[2]);
-                    if (isValid) {
-                        resultView.printChessBoard(game.getBoard());
+                    if (isWhiteTurn && game.isWhitePieceAt(moveCommand[1])) {
+                        boolean isValid = game.move(moveCommand[1], moveCommand[2]);
+                        if (isValid) {
+                            resultView.printChessBoard(game.getBoard());
+                            isWhiteTurn = false; // 백돌 차례 후 흑돌 차례로 변경
+                        } else {
+                            resultView.printInvalidMove();
+                        }
+                    } else if (!isWhiteTurn && !game.isWhitePieceAt(moveCommand[1])) {
+                        boolean isValid = game.move(moveCommand[1], moveCommand[2]);
+                        if (isValid) {
+                            resultView.printChessBoard(game.getBoard());
+                            isWhiteTurn = true; // 흑돌 차례 후 백돌 차례로 변경
+                        } else {
+                            resultView.printInvalidMove();
+                        }
                     } else {
-                        resultView.printInvalidMove();
+                        System.out.println("잘못된 차례입니다.");
                     }
                 } else {
                     resultView.printInvalidMove();
@@ -34,7 +55,7 @@ public class Application {
             } else if (command.equals("end")) {
                 break;
             } else {
-                System.out.println("알 수 없는 명령입니다. 다시 시도하세요.");
+                System.out.println("알 수 없는 명령입니다. 다시 입력하세요.");
             }
         }
     }

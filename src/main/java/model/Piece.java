@@ -17,5 +17,9 @@ public abstract class Piece {
         return color;
     }
 
+    public boolean isWhite() {
+        return "white".equals(this.color);
+    }
+
     public abstract boolean isValidMove(String source, String target, ChessBoard board);
 }
