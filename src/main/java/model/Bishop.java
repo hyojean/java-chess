@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Map;
+
 public class Bishop extends Piece {
 
     public Bishop(char symbol, String color) {
@@ -45,5 +47,10 @@ public class Bishop extends Piece {
         }
 
         return true;
+    }
+
+    @Override
+    public double getScore(Map<String, Piece> board) {
+        return 3.0;
     }
 }

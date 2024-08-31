@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Map;
+
 public abstract class Piece {
     private final char symbol;
     private final String color;
@@ -17,9 +19,11 @@ public abstract class Piece {
         return color;
     }
 
-    public boolean isWhite() {
-        return "white".equals(this.color);
+    public boolean isKing() {
+        return this instanceof King;
     }
 
     public abstract boolean isValidMove(String source, String target, ChessBoard board);
+
+    public abstract double getScore(Map<String, Piece> board);
 }

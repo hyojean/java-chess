@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Map;
+
 public class Queen extends Piece {
 
     public Queen(char symbol, String color) {
@@ -22,5 +24,10 @@ public class Queen extends Piece {
                     || new Bishop('B', getColor()).isValidMove(source, target, board);
         }
         return false;
+    }
+
+    @Override
+    public double getScore(Map<String, Piece> board) {
+        return 9.0;
     }
 }

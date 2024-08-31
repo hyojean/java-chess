@@ -10,29 +10,44 @@ public class ChessGame {
         this.board = new ChessBoard();
     }
 
-    public boolean move(String source, String target) {
-        if (!isValidPosition(source) || !isValidPosition(target)) {
-            System.out.println("유효하지 않은 위치입니다. 체스판 내의 위치를 입력하세요.");
-            return false;
-        }
-        return board.movePiece(source, target);
-    }
-
     public ChessBoard getBoard() {
         return board;
     }
 
-    public boolean isValidPosition(String position) {
-        if (position.length() != 2) {
-            return false;
+    public boolean move(String source, String target) {
+        Piece targetPiece = board.getPieceAt(target);
+        boolean moved = board.movePiece(source, target);
+        if (moved && targetPiece != null && targetPiece.isKing()) {
+            System.out.println("킹이 잡혔습니다. 게임이 종료됩니다.");
+            System.exit(0); // 게임 종료
         }
-        char col = position.charAt(0);
-        char row = position.charAt(1);
-        return col >= 'a' && col <= 'h' && row >= '1' && row <= '8';
+        return moved;
     }
 
     public boolean isWhitePieceAt(String position) {
         Piece piece = board.getPieceAt(position);
-        return piece != null && piece.isWhite();
+        return piece != null && piece.getColor().equals("white");
+    }
+
+    public double calculateScore(String color) {
+        return board.calculateScore(color);
+    }
+
+    public String getGameStatus() {
+        double whiteScore = calculateScore("white");
+        double blackScore = calculateScore("black");
+
+        String result = "백팀 점수: " + whiteScore + "\n" +
+                "흑팀 점수: " + blackScore + "\n";
+
+        if (whiteScore > blackScore) {
+            result += "백팀이 이겼습니다!";
+        } else if (blackScore > whiteScore) {
+            result += "흑팀이 이겼습니다!";
+        } else {
+            result += "무승부입니다!";
+        }
+
+        return result;
     }
 }

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Map;
+
 public class Pawn extends Piece {
 
     public Pawn(char symbol, String color) {
@@ -31,5 +33,14 @@ public class Pawn extends Piece {
         }
 
         return false;
+    }
+
+    @Override
+    public double getScore(Map<String, Piece> board) {
+        int col = getSymbol();
+        long sameColumnPawns = board.values().stream()
+                .filter(p -> p instanceof Pawn && p.getColor().equals(this.getColor()) && p.getSymbol() == col)
+                .count();
+        return sameColumnPawns > 1 ? 0.5 : 1.0;
     }
 }

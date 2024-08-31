@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Map;
+
 public class Knight extends Piece {
 
     public Knight(char symbol, String color) {
@@ -18,5 +20,10 @@ public class Knight extends Piece {
 
         // 나이트는 L자 모양으로 이동
         return (colDiff == 2 && rowDiff == 1) || (colDiff == 1 && rowDiff == 2);
+    }
+
+    @Override
+    public double getScore(Map<String, Piece> board) {
+        return 2.5;
     }
 }

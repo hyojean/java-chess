@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Map;
+
 public class Rook extends Piece {
 
     public Rook(char symbol, String color) {
@@ -50,5 +52,10 @@ public class Rook extends Piece {
         }
 
         return true;
+    }
+
+    @Override
+    public double getScore(Map<String, Piece> board) {
+        return 5.0;
     }
 }

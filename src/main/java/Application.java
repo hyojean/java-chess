@@ -14,6 +14,7 @@ public class Application {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+        System.out.println("> 점수 확인 : status");
 
         while (true) {
             String command = inputView.inputCommand();
@@ -27,13 +28,8 @@ public class Application {
                     System.out.println("게임을 시작하세요.");
                     continue;
                 }
-
                 String[] moveCommand = command.split(" ");
                 if (moveCommand.length == 3) {
-                    if (!game.isValidPosition(moveCommand[1]) || !game.isValidPosition(moveCommand[2])) {
-                        System.out.println("유효하지 않은 위치입니다. 다시 입력하세요.");
-                        continue;
-                    }
                     if (isWhiteTurn && game.isWhitePieceAt(moveCommand[1])) {
                         boolean isValid = game.move(moveCommand[1], moveCommand[2]);
                         if (isValid) {
@@ -56,6 +52,8 @@ public class Application {
                 } else {
                     resultView.printInvalidMove();
                 }
+            } else if (command.equals("status")) {
+                System.out.println(game.getGameStatus());
             } else if (command.equals("end")) {
                 break;
             } else {

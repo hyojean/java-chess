@@ -41,6 +41,10 @@ public class ChessBoard {
         }
     }
 
+    public Piece getPieceAt(String position) {
+        return board.get(position);
+    }
+
     public boolean movePiece(String source, String target) {
         Piece piece = board.get(source);
         if (piece == null || !piece.isValidMove(source, target, this)) {
@@ -52,11 +56,17 @@ public class ChessBoard {
         return true;
     }
 
-    public Piece getPieceAt(String position) {
-        return board.get(position);
-    }
-
     public Map<String, Piece> getBoard() {
         return board;
+    }
+
+    public double calculateScore(String color) {
+        double score = 0.0;
+        for (Piece piece : board.values()) {
+            if (piece.getColor().equals(color)) {
+                score += piece.getScore(board);
+            }
+        }
+        return score;
     }
 }

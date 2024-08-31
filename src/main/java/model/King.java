@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Map;
+
 public class King extends Piece {
 
     public King(char symbol, String color) {
@@ -18,5 +20,10 @@ public class King extends Piece {
 
         // 킹은 한 칸씩만 이동 가능
         return colDiff <= 1 && rowDiff <= 1;
+    }
+
+    @Override
+    public double getScore(Map<String, Piece> board) {
+        return 0.0; // 킹은 점수 없음
     }
 }
