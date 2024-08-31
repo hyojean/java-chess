@@ -12,16 +12,20 @@ public class Application {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
 
         while (true) {
-            String command = inputView.inputCommand();
+            try {
+                String command = inputView.inputCommand();
 
-            if (command.equals("start")) {
-                chessBoard.initialize();
-                resultView.printChessBoard(chessBoard);
-                System.out.println();  // 체스판 출력 후 줄 바꿈
-            }
-
-            if (command.equals("end")) {
-                break;
+                if (command.equals("start")) {
+                    chessBoard.initialize();
+                    resultView.printChessBoard(chessBoard);
+                    System.out.println();  // 체스판 출력 후 줄 바꿈
+                } else if (command.equals("end")) {
+                    break;
+                } else {
+                    throw new IllegalArgumentException("start 또는 end를 입력하세요.");
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
