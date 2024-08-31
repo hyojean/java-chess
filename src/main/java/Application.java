@@ -8,7 +8,7 @@ public class Application {
         InputView inputView = new InputView();
         ResultView resultView = new ResultView();
         boolean isGameStarted = false;
-        boolean isWhiteTurn = true; // true면 백돌 차례, false면 흑돌 차례
+        boolean isWhiteTurn = true;
 
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
@@ -30,11 +30,15 @@ public class Application {
 
                 String[] moveCommand = command.split(" ");
                 if (moveCommand.length == 3) {
+                    if (!game.isValidPosition(moveCommand[1]) || !game.isValidPosition(moveCommand[2])) {
+                        System.out.println("유효하지 않은 위치입니다. 다시 입력하세요.");
+                        continue;
+                    }
                     if (isWhiteTurn && game.isWhitePieceAt(moveCommand[1])) {
                         boolean isValid = game.move(moveCommand[1], moveCommand[2]);
                         if (isValid) {
                             resultView.printChessBoard(game.getBoard());
-                            isWhiteTurn = false; // 백돌 차례 후 흑돌 차례로 변경
+                            isWhiteTurn = false;
                         } else {
                             resultView.printInvalidMove();
                         }
@@ -42,7 +46,7 @@ public class Application {
                         boolean isValid = game.move(moveCommand[1], moveCommand[2]);
                         if (isValid) {
                             resultView.printChessBoard(game.getBoard());
-                            isWhiteTurn = true; // 흑돌 차례 후 백돌 차례로 변경
+                            isWhiteTurn = true;
                         } else {
                             resultView.printInvalidMove();
                         }
